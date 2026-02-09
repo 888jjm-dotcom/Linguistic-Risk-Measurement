@@ -1,62 +1,102 @@
 # Linguistic Risk Measurement (LRM)
+
 A tool for modeling linguistic risks in legal and financial governance.
 
-LRM PDF Risk Vector Analyser
-Conceptual & Technical Measurement Framework
+**[LRM PDF Risk Vector Analyser]**  
+**[Conceptual & Technical Measurement Framework]**
 
-# Overview
-This repository contains the operational framework for the Language Risk Model (LRM). This system converts qualitative linguistic manipulation patterns into quantifiable, auditable risk vectors.
+---
 
-Rather than determining truth or legal correctness, this tool is designed to detect structural linguistic risk signals commonly associated with legal correspondence, institutional communications, and adversarial exchanges.
+## Overview
 
-# Core Risk Dimensions
+This repository contains the operational framework for the Linguistic Risk Model (LRM). The system converts qualitative linguistic manipulation patterns into **quantifiable, auditable risk vectors**.
 
-The analyser evaluates documents across four distinct LRM risk categories:
+It does **not** determine truth or legal correctness. Instead, it detects **structural linguistic risk signals** commonly found in:
 
-# Embedded Default / Verdicting (embedded_default): 
+- Legal correspondence  
+- Institutional communications  
+- Adversarial exchanges  
 
-Measures the extent to which a sentence pre-loads a conclusion as established fact (e.g., "clearly," "is," or "so-called").
+---
 
-Burden Shift / Authority Substitution (burden_shift): Identifies language that relocates responsibility or demands compliance without reciprocal justification (e.g., "must," "required to," or "until you").
+## Core Risk Dimensions
 
-Deflection / Premature Closure (deflection): Detects attempts to terminate engagement or shut down dialogue without addressing substance.
+The analyser evaluates documents across four distinct LRM risk categories.
 
-Interest Concealment (interest_concealment): Flags language that obscures self-interest or liability, often using faux-neutral phrasing.
+### 1. Embedded Default / Verdicting (`embedded_default`)
 
-# Technical Methodology
+Measures how strongly a sentence **pre‑loads a conclusion as fact**.
 
-Unit of Analysis: 
-The system processes documents at the sentence level, capturing incremental risk signals to preserve the "signal" without exaggeration.
+Examples of triggers:
 
-# Processing Pipeline:
+- Categorical framing with “is / are” combined with absolutists: “clearly”, “never”, “obviously”.  
+- Discounting terms: “mere”, “merely”, “just”, “only”, “so‑called”.  
+- Verdict labels: “baseless”, “frivolous”, “without merit”, “vexatious”.
 
-PDF to Text: Extraction of raw content.
+### 2. Burden Shift / Authority Substitution (`burden_shift`)
 
-Segmentation: Decomposition into independent sentences.
+Identifies language that **relocates responsibility or demands compliance** without reciprocal justification.
 
-Feature Scoring: Evaluating each sentence against the four dimensions.
+Examples:
 
-Aggregation: Compiling sentence scores into a Document Risk Vector.
+- Obligation phrases: “must”, “required to”, “failure to… will result in…”.  
+- Authority framing: “it is your responsibility”, “we will assume you agree”.  
+- Procedural verdicts: “abuse of process”, “completely defective”, “wrong forum”.
 
-Normalisation: Using Z-scores across a corpus to reveal outliers and structural extremes.
+### 3. Deflection / Premature Closure (`deflection`)
 
-# Usage & Interpretation
-The output is a comparative risk profile.
+Detects attempts to **terminate engagement or shut down dialogue** without addressing substance.
 
-0.0: Average for the corpus.
+Examples:
 
-+1.0: One standard deviation above the norm.
+- Closure statements: “this is final”, “no further discussion”, “we will take no further steps”.  
+- Labelling instead of engaging: “baseless complaint”, “plainly vexatious”, “vague to the point of being meaningless”.  
 
-+2.0: Indicates a structurally extreme document.
+### 4. Interest Concealment (`interest_concealment`)
 
-# Intended Use & Limitations
-This instrument is designed for:
-1. Legal correspondence analysis.
-2. Institutional power imbalance reviews.
-3. Forensic linguistic support and comparative auditing.
+Flags language that **obscures self‑interest or liability**, often behind neutral / benevolent phrasing.
 
-# Important: 
-This tool flags structural linguistic risk; it does not assess legal correctness, infer human intent, or replace professional human judgment.
+Examples:
 
-# Conceptual Summary
-In simple terms: The system measures how much a document tells the reader what to think, what to do, and when to stop talking—while pretending not to.
+- Liability disclaimers and policy shields: “we cannot accept liability”, “no liability of whatsoever nature”, “in line with our policies”.  
+- Empathy plus defence: warm, caring language combined with threats, costs, or mandates.
+
+---
+
+## Technical Methodology
+
+### Unit of Analysis
+
+The system operates at the **sentence level**, to capture incremental risk signals without exaggeration.
+
+### Processing Pipeline
+
+1. **PDF → Text**  
+   Extract raw text from PDF using `pdfplumber`.
+
+2. **Segmentation**  
+   Split the text into individual sentences using a lightweight, offline splitter.
+
+3. **Feature Scoring**  
+   For each sentence, compute four scores:
+   - `embedded_default`
+   - `burden_shift`
+   - `deflection`
+   - `interest_concealment`
+
+4. **Aggregation**  
+   Average sentence scores per document to obtain a **Document Risk Vector**.
+
+5. **Normalisation (optional)**  
+   Across a corpus of documents, compute **Z‑scores** to reveal outliers and structurally extreme texts.
+
+---
+
+## Usage
+
+### Requirements
+
+Install once (in your system Python or a virtual environment):
+
+```bash
+python -m pip install pdfplumber pandas scikit-learn
