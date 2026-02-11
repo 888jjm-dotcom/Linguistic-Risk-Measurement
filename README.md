@@ -1,12 +1,12 @@
-# Start Here: Conceptual Proof Pack
+## Start Here: Conceptual Proof Pack
 
 1. Conceptual Foundation: ARTIFICE.pdf: Foundational Theorum and Definition of "Terminological Bad Faith" [/docs/Artifice.pdf]
 2. Linguistic Risk Framework and Audit Protocol (how to measure Linguistic Risk) [/docs/Linguistic Risk Modeling Framweork.pdf]
-3. Tools and Instruments: Risk Vector Analyser + Governance Instrument (how to deploy this in practice) [/docs/LRM PDF Risk Vector Analyser.pdf] and [ /docs/LRM Governance Instrument.pdf]
+3. Tools and Instruments: Risk Vector Analyser (the Manual for this code) + Governance Instrument (how to deploy this in practice) [/docs/LRM PDF Risk Vector Analyser.pdf] and [ /docs/LRM Governance Instrument.pdf]
 
 All supporting papers and instruments are included in the docs folder so you can review the full methodology and verify that this is a worked‑through framework, not just a concept.
 
-# License
+## License
 
 - LRM (Linguistic Risk Measurement) © 2026 - John James Marshall CA(SA)
 - Licensed under the Apache License 2.0 – see LICENSE and NOTICE for details. 
