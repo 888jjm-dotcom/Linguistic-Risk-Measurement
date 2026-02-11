@@ -1,3 +1,8 @@
+# License
+
+##LRM (Linguistic Risk Measurement) © 2026 - John James Marshall CA(SA)
+##Licensed under the Apache License 2.0 – see LICENSE for details. 
+
 # Linguistic Risk Measurement (LRM)
 
 A tool for modeling linguistic risks in legal and financial governance.
