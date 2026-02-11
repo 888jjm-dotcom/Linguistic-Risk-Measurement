@@ -1,1 +1,4 @@
-
+D1: Artifice.pdf
+D3. LRM Governance Instrument.pdf
+D3. Linguistic Risk Modeling Framework.pdf
+MANUAL: LRM Risk Vector Analyser.pdf - how to use
