@@ -1,7 +1,7 @@
 # License
 
-##LRM (Linguistic Risk Measurement) © 2026 - John James Marshall CA(SA)
-##Licensed under the Apache License 2.0 – see LICENSE for details. 
+- LRM (Linguistic Risk Measurement) © 2026 - John James Marshall CA(SA)
+- Licensed under the Apache License 2.0 – see LICENSE and NOTICE for details. 
 
 # Linguistic Risk Measurement (LRM)
 
