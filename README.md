@@ -101,84 +101,223 @@ The system operates at the **sentence level**, to capture incremental risk signa
    Across a corpus of documents, compute **Z‑scores** to reveal outliers and structurally extreme texts.
 
 ---
+# Conceptual & Technical Measurement Manual
 
-## Usage
+## 1. Purpose of the Instrument
+
+The LRM PDF Risk Vector Analyser operationalises the Language Risk Model (LRM) by converting qualitative linguistic manipulation patterns into quantifiable risk vectors. Rather than determining truth or legal correctness, it detects structural signals associated with:
+
+Its aim is not to determine truth or legal correctness, but to detect structural linguistic risk signals commonly associated with:
+
+• Embedded verdicting
+• Authority substitution
+• Burden displacement
+• Premature closure
+• Interest concealment
+
+These signals are especially prevalent in legal correspondence, institutional
+letters, and adversarial communications.
+
+The output is a comparative risk profile, **not a diagnosis**.
+
+## 2. Unit of Analysis
+
+Primary Unit: **Sentence**
+
+Each PDF is decomposed into sentences, because:
+• Manipulative language operates locally (sentence-level)
+• Risk is often introduced incrementally
+• Aggregation preserves signal without exaggeration
+Every sentence is independently evaluated and then aggregated at document level.
+
+## 3. Processing Pipeline (Conceptual)
+
+1. PDF → Text
+2. Text → Sentences
+3. Sentence → Feature Scores
+4. Sentence Scores → Document Risk Vector
+5. Multiple Documents → Normalised Risk Matrix
+Each step is deterministic and **auditable**.
+
+## 4. The Four Risk Dimensions
+
+Each dimension corresponds to a distinct LRM risk category.
+
+### 4.1 Embedded Default / Verdicting
+
+**Variable**: embedded_default
+
+**What it measures:**
+The extent to which a sentence pre-loads a conclusion as if it were already established fact.
+
+**Linguistic indicators**
+• Categorical verbs: is, are
+• Absolutist qualifiers: always, never, obvious, clearly
+• Discounting language: mere, just, only, so-called
+
+**Theoretical basis**
+This maps to pre-emptive framing, where disagreement is structurally discouraged by
+embedding the verdict inside the description.
+
+**Measurement logic**
+• +1 if categorical structure + absolutist language appears
+• +1 for each discount marker detected
+
+**Interpretation**
+• 0.0 → Neutral description
+• 0.5–1.0 → Mild verdicting pressure
+• >1.0 → Repeated or layered embedded defaults
+
+### 4.2 Burden Shift / Authority Substitution
+
+**Variable:** burden_shift
+
+**What it measures:**
+Language that relocates responsibility or substitutes argument with asserted authority.
+
+**Linguistic indicators**
+• Modal impositions: must, required to
+• Conditional gating: until you
+• Authority claims: clearly, beyond doubt, self-evident
+
+**Theoretical Basis:**
+LRM identifies this as procedural dominance, where compliance is demanded without reciprocal justification.
+
+**Measurement Logic**
+• +1 for obligation language
+• +2 for explicit termination dependency
+• +1 per authority marker
+
+**Interpretation**
+• 0.0 → No burden manipulation
+• 1.0–2.0 → Procedural pressure
+• >2.0 → Coercive or authoritarian structure
+
+### 4.3 Deflection / Premature Closure
+
+**Variable**: Deflection
+
+**What it Measures:**
+Attempts to **terminate engagement** without addressing **substance**.
+
+**Linguistic Indicators:**
+• Closure phrases: this is final, no further discussion
+• Dismissive reframing: ignored the pertinent issues
+
+**Theoretical Basis:**
+This reflects **interation foreclosure** - a classic control mechanism in adversarial texts.
+
+**Measurement logic:**
+• +1 per closure marker
+• +2 for explicit dismissal of engagement
+
+**Interpretation**
+• 0.0 → Open engagement
+• 1.0 → Soft closure
+• ≥2.0 → Hard refusal / stonewalling
+
+### 4.4 Interest Concealment
+
+**Variable:** interest_concealment
+
+##What it Measures:**
+Language that normalises or obscures self-interest, liability, or commercial exposure.
+
+**Linguistic indicators:**
+• Liability disclaimers
+• Fee justifications
+• Faux-neutral phrasing around commercial outcomes
+
+**Special Heuristic:**
+Empathy language co-occurring with commercial content (e.g., “we wish you well” + “invoice”) increases risk.
+
+**Theoretical Basis:**
+LRM treats this as motivational opacity — presenting interest-laden positions as neutral or inevitable.
+
+**Interpretation:**
+• 0.0 → Transparent interest
+• 1.0 → Standard disclaimers
+• ≥2.0 → Active concealment
+
+## 5. Document-Level Risk Vector
+
+For **each document**, the system computes:
+*mean(feature score per sentence)*
+
+This avoids: 
+• Length bias; 
+• Emotional Inflation and 
+• Over-penalising verbose documents
+
+### Example Output:
+
+"embedded_default      0.83"
+"burden_shift          1.25"
+"deflection            0.42"
+"interest_concealment  0.67"
+
+*This Means:*
+• Verdicting pressure present
+• Strong procedural control
+• Some engagement allowed
+• Moderate interest masking
+
+## 6. Corpus Normalisation (Z-Scores)
+
+When multiple PDFs are analysed together, raw scores are converted into **z-scores**:
+*(value - corpus mean) / standard deviation*
+
+**Why this Matters**:
+• Reveals outliers
+• Enables comparative analysis
+• Prevents absolute-score fallacy
+
+**Interpretation:**
+• 0.0 → Average for corpus
+• +1.0 → 1 standard deviation above norm
+• +2.0 → Structurally extreme document
+
+This is particularly powerful in **legal correspondence chains**.
+
+## 7. What the Instrument/Tool Does Not Claim
+
+### Explicit non-claims (important):
+
+• It Does not assess legal correctness
+• It Does not infer intent
+• It Does not label abuse or misconduct
+• It Does not replace human judgment
+
+It **flags structural linguistic risk**, *nothing more — nothing less*.
+
+## 8. Intended Use Contexts
+
+This instrument is suitable for:
+
+• Legal correspondence analysis
+• Institutional power imbalance review
+• Comparative document auditing
+• Forensic linguistic support material
+• Research into manipulative framing
+
+It is not intended as evidence on its own, **but as analytical scaffolding**.
+
+## 9. Conceptual Summary
+
+**In simple terms:**
+
+The system measures *how much a document tells you* what to think, what to do,
+and when to stop talking — while pretending not to.
+
+That’s the LRM in **operational form.**
+
+---
+
 
 ### Requirements
 
 Install once (in your system Python or a virtual environment):
-
 ```bash
 python -m pip install pdfplumber pandas scikit-learn
-
-# LRM Risk Vector Measurement - How it works:
-
-## 1. Purpose of the Instrument
-
-[span_0](start_span)This system operationalises elements of the Language Risk Model (LRM) by converting qualitative linguistic manipulation patterns into quantifiable risk vectors[span_0](end_span). [span_1](start_span)Its aim is not to determine truth or legal correctness, but to detect structural linguistic risk signals[span_1](end_span).
-
-[span_2](start_span)The output is a comparative risk profile rather than a diagnosis[span_2](end_span). It is specifically designed to flag:
-* **[span_3](start_span)Embedded verdicting**[span_3](end_span)
-* **[span_4](start_span)Authority substitution**[span_4](end_span)
-* **[span_5](start_span)Burden displacement**[span_5](end_span)
-* **[span_6](start_span)Premature closure**[span_6](end_span)
-* **[span_7](start_span)Interest concealment**[span_7](end_span)
-
----
-
-## 2. Unit of Analysis
-
-[span_8](start_span)The system uses the **sentence** as the primary unit of analysis[span_8](end_span). [span_9](start_span)This ensures that manipulative language is caught at a local level, risk is measured incrementally, and the final signal is not exaggerated by document length[span_9](end_span).
-
----
-
-## 3. The Four Risk Dimensions
-[span_10](start_span)The analyser evaluates text across four distinct LRM risk categories[span_10](end_span):
-
-### 4.1 Embedded Default / Verdicting (`embedded_default`)
-* **[span_11](start_span)Definition**: Measures how much a sentence pre-loads a conclusion as if it were established fact[span_11](end_span).
-* **[span_12](start_span)Linguistic Indicators**: Categorical verbs (*is, are*), absolutist qualifiers (*always, never*), and discounting language (*mere, only*)[span_12](end_span).
-* **[span_13](start_span)Interpretation**: Scores $>1.0$ indicate repeated or layered embedded defaults[span_13](end_span).
-
-### 4.2 Burden Shift / Authority Substitution (`burden_shift`)
-* **[span_14](start_span)Definition**: Language that relocates responsibility or substitutes argument with asserted authority[span_14](end_span).
-* **[span_15](start_span)Linguistic Indicators**: Modal impositions (*must, required to*), conditional gating (*until you*), and authority claims (*clearly, self-evident*)[span_15](end_span).
-* **[span_16](start_span)Interpretation**: Scores $>2.0$ suggest a coercive or authoritarian structure[span_16](end_span).
-
-### 4.3 Deflection / Premature Closure (`deflection`)
-* **[span_17](start_span)Definition**: Attempts to terminate engagement without addressing substance[span_17](end_span).
-* **[span_18](start_span)Linguistic Indicators**: Closure phrases (*this is final*) and dismissive reframing[span_18](end_span).
-* **[span_19](start_span)Interpretation**: Scores $\ge2.0$ indicate hard refusal or "stonewalling"[span_19](end_span).
-
-### 4.4 Interest Concealment (`interest_concealment`)
-* **[span_20](start_span)Definition**: Language that normalises or obscures self-interest, liability, or commercial exposure[span_20](end_span).
-* **[span_21](start_span)Heuristic**: Empathy language (e.g., "we wish you well") co-occurring with commercial content (e.g., "invoice") increases this risk score[span_21](end_span).
-* **[span_22](start_span)Interpretation**: Scores $\ge2.0$ suggest active concealment[span_22](end_span).
-
----
-
-## 4. Scoring & Normalisation
-### Document-Level Vector
-[span_23](start_span)For each document, the system computes the mean feature score per sentence[span_23](end_span). [span_24](start_span)This avoids length bias and over-penalising verbose documents[span_24](end_span).
-
-### Corpus Normalisation (Z-Scores)
-When multiple PDFs are analysed together, raw scores are converted into z-scores:
-[span_25](start_span)$$Z = \frac{\text{value} - \text{corpus mean}}{\text{standard deviation}}$$[span_25](end_span)
-
-* **[span_26](start_span)0.0**: Average for the corpus[span_26](end_span).
-* **[span_27](start_span)+2.0**: A structurally extreme document relative to the set[span_27](end_span).
-
----
-
-## 5. Usage & Limitations
-
-### Intended Contexts
-* [span_28](start_span)Legal correspondence analysis[span_28](end_span).
-* [span_29](start_span)Institutional power imbalance review[span_29](end_span).
-* [span_30](start_span)Forensic linguistic support material[span_30](end_span).
-
-### Explicit Non-Claims
-[span_31](start_span)The tool **does not** assess legal correctness, infer intent, or label misconduct[span_31](end_span). [span_32](start_span)It serves as analytical scaffolding, not standalone evidence[span_32](end_span).
-
-> **[span_33](start_span)Conceptual Summary**: The system measures how much a document tells you what to think, what to do, and when to stop talking—while pretending not to[span_33](end_span).
+```bash
 
