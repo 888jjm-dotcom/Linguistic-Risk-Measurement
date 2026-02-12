@@ -220,7 +220,7 @@ This reflects **interation foreclosure** - a classic control mechanism in advers
 
 **Variable:** interest_concealment
 
-##What it Measures:**
+**What it Measures:**
 Language that normalises or obscures self-interest, liability, or commercial exposure.
 
 **Linguistic indicators:**
