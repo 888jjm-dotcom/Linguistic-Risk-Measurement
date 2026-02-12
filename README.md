@@ -319,5 +319,4 @@ That’s the LRM in **operational form.**
 Install once (in your system Python or a virtual environment):
 ```bash
 python -m pip install pdfplumber pandas scikit-learn
-```bash
 
