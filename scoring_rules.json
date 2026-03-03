@@ -1,0 +1,108 @@
+{
+  "scoring_rules_version": "2.0",
+
+  "verdict_markers": {
+    "clearly": 1.5,
+    "obviously": 1.5,
+    "plainly": 1.5,
+    "baseless": 2.0,
+    "frivolous": 2.0,
+    "vexatious": 2.5,
+    "manifestly": 1.5,
+    "patently": 1.5,
+    "groundless": 2.0,
+    "wholly without merit": 2.5,
+    "entirely misconceived": 2.5,
+    "without merit": 2.0,
+    "plainly wrong": 2.0,
+    "undeniably": 1.8,
+    "undoubtedly": 1.8
+  },
+
+  "burden_markers": {
+    "must": 1.5,
+    "required to": 1.5,
+    "failure to": 2.0,
+    "it is your responsibility": 2.0,
+    "strictly non-negotiable": 3.0,
+    "we will assume": 2.0,
+    "wrong forum": 2.0,
+    "abuse of process": 2.5,
+    "demand": 1.5,
+    "non-compliance": 2.0,
+    "shall": 1.6,
+    "obliged to": 1.8,
+    "you are required": 1.8
+  },
+
+  "deflection_markers": {
+    "this is final": 2.5,
+    "no further discussion": 2.5,
+    "we will take no further steps": 3.0,
+    "will not be entertained": 2.0,
+    "as previously stated": 1.5,
+    "ignored": 1.5,
+    "matter is closed": 2.5,
+    "refuse to engage": 2.5,
+    "without prejudice": 1.2,
+    "notwithstanding the above": 1.2
+  },
+
+  "interest_markers": {
+    "no liability": 2.0,
+    "in line with policy": 1.5,
+    "commercial sensitivity": 2.0,
+    "best interests": 1.0,
+    "standard procedure": 1.5,
+    "strictly confidential": 1.0,
+    "for your protection": 1.2,
+    "regulatory requirement": 1.0,
+    "in our interests": 1.5,
+    "to avoid liability": 1.8
+  },
+
+  "hedge_markers": {
+    "may":  -0.8,
+    "might": -0.8,
+    "could": -0.6,
+    "possibly": -0.7,
+    "perhaps": -0.7,
+    "appears to": -0.6,
+    "seems": -0.6,
+    "likely": -0.5,
+    "suggests": -0.5,
+    "to the best of our knowledge": -0.6,
+    "it appears that": -0.6,
+    "it is possible": -0.6
+  },
+
+  "booster_markers": {
+    "definitely": 1.2,
+    "undoubtedly": 1.5,
+    "absolutely": 1.5,
+    "certainly": 1.2,
+    "clearly": 1.5,
+    "obviously": 1.5,
+    "plainly": 1.5,
+    "beyond doubt": 2.0,
+    "without question": 2.0
+  },
+
+  "presupposition_markers": {
+    "know": 1.0,
+    "realise": 1.0,
+    "regret": 1.0,
+    "begin": 0.8,
+    "continue": 0.8,
+    "stop": 0.8,
+    "manage to": 0.6,
+    "succeed in": 0.6,
+    "again": 0.5,
+    "still": 0.5,
+    "already": 0.5,
+    "the fact that": 1.0,
+    "given that": 1.0,
+    "as you will recall": 1.2,
+    "it is clear that": 1.5
+  }
+}
