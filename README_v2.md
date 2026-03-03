@@ -300,7 +300,189 @@ That is the operational definition of linguistic risk.
 
 ---
 
-# Requirements
+# 1. Installation
+
+Install dependencies once:
+
+python -m pip install pdfplumber pandas scikit-learn
+
+# Requirements for LRM v2
+
+## Overview
+
+LRM v2 is the interactive (GUI-driven) version of the Linguistic Risk Measurement instrument.
+
+It allows users to:
+
+- Create and manage “Matters”
+- Upload PDFs
+- Assign documents to Side_A or Side_B
+- Analyse linguistic risk patterns
+- Generate timestamped, auditable output
+
+This version is intended for structured analytical review and research use.
+
+# Run the tool: python LRM_v3.7.py
+
+## 2. Core Concept: Matters
+
+A Matter represents one correspondence context.
+
+Examples:
+A dispute
+A regulatory exchange
+A complaint cycle
+A litigation correspondence chain
+
+Each Matter is self-contained. All scoring and Z-score comparisons occur within that Matter only.
+
+## 3. Matter Structure
+
+When a new Matter is created, the system automatically creates:
+Matters/
+    Matter_Name/
+        Side_A/
+        Side_B/
+        analysis_output/
+
+Side_A contains documents from one party.
+Side_B contains documents from the opposing party.
+
+## 4. Running an Analysis
+
+When you launch: python LRM_v3.7.py
+
+analysis_output stores timestamped results.
+
+You will see:
+Existing Matters:
+1. ExampleMatter
+0. Create New Matter
+Select Matter:
+
+Enter "0" to crate new Matter, then provide a New Matter Name.
+
+## 5. Uploading Documents
+
+After selecting a Matter a file dialog opens.
+Select one or more PDFs when you are prompted:
+
+You will be asked to assign to Side_A or Side_B? (A/B). Ensure that the files selected were related to one side in the matter.
+
+### The PDFs are copied into the appropriate folder.
+
+## 6. Scoring Rules
+
+Scoring is controlled by: scoring_rules.json
+This file defines:
+
+- verdict_markers
+- burden_markers
+- deflection_markers
+- interest_markers
+- hedge_markers
+- booster_markers
+- presupposition_markers
+
+Each rule has a numeric weight. The output file also contains: "scoring_rules_version": "X.X" as a record.
+This version is recorded in every output JSON file for audit traceability. 
+You may edit scoring rules, but version control discipline is strongly recommended.
+
+## 7. Risk Dimensions
+
+Each document is scored across four dimensions:
+1. Embedded Default (embedded_default) - Pre-loaded conclusions presented as fact.
+2. Burden Shift (burden_shift) - Procedural dominance or imposed obligation language.
+3. Deflection (deflection) - Attempts to prematurely close or terminate engagement.
+4. Interest Concealment (interest_concealment) - Language obscuring liability or commercial exposure.
+
+## 8. Output Structure
+
+Each run generates a timestamped output folder:
+
+Matters/
+    Matter_Name/
+        analysis_output/
+            YYYY-MM-DD_HH-MM-SS/
+                raw_scores.csv
+                z_scores.csv (if multiple docs)
+                results.json
+
+### results.json Contains:
+  Instrument name
+  Descriptor
+  Run ID
+  Matter name
+  Scoring rules version
+  Raw scores by document
+  Z-scores (if applicable)
+  Side summary averages
+
+### Example snippet:
+{
+  "matter": "Marshall_Dispute",
+  "scoring_rules_version": "2.0",
+  "raw_scores_by_document": {
+    "Side_A | Letter1.pdf": {
+      "embedded_default": 0.36,
+      "burden_shift": 0.88,
+      "deflection": 0.00,
+      "interest_concealment": 0.13
+    }
+  }
+}
+
+## 9. Z-Scores (Comparative Mode)
+If multiple documents exist within a Matter, then the system calculates: 
+z = (value - corpus mean) / standard deviation
+
+This identifies structurally extreme documents within that Matter.
+
+### Z-scores are not cross-Matter comparable.
+
+## 10. What LRM Does NOT Do
+
+LRM:
+Does not determine legal correctness
+Does not assess truth
+Does not infer intent
+Does not label misconduct
+Does not replace professional judgment
+It flags structural linguistic risk patterns only.
+
+## 11. Recommended Workflow
+
+Create Matter
+Upload Side_A documents
+Upload Side_B documents
+Run analysis
+Parallel Review both Raw scores and Z-scores
+Side summaries - Document findings in professional judgement
+
+## 12. Best Practice Guidance
+
+Keep Matters discrete. 
+Avoid mixing unrelated correspondence.
+Do not alter scoring rules mid-Matter.
+Record scoring_rules_version when reporting results.
+Treat outputs as analytical scaffolding, not conclusions.
+
+## 13. Summary
+
+LRM v2 allows structured, auditable linguistic risk assessment within defined correspondence contexts.
+
+It measures how strongly documents:
+
+Pre-load conclusions
+Shift burden
+Foreclose engagement
+Conceal interest
+
+All scoring is deterministic, versioned, and transparent.
+
+---
+
+# Requirements for engine
 
 ## Install once:
 
@@ -320,4 +502,4 @@ That is the operational definition of linguistic risk.
 
 ---
 
-**LRM v2 formalises the transition from research prototype to structured analytical instrument.**
+
