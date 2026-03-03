@@ -57,7 +57,7 @@ Version 2 introduces significant architectural and analytical improvements:
 
 All linguistic scoring dictionaries are now stored in:
 
-## Scoring_rules.json
+## Scoring_rules.json (scoring_rules.json must be in the same folder as LRMv2.py)
 
 This allows:
 
@@ -66,11 +66,9 @@ This allows:
 - Controlled methodological evolution
 - Reproducible analysis runs
 
-Each analysis run records:
+Each analysis run records into an output as:
 
-### output
-
-Scoring_rules_version": "X.X" inside its JSON output.
+"Scoring_rules_version": "X.X" inside its JSON output folder.
 
 ---
 
